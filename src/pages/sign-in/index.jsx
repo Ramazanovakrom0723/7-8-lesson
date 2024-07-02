@@ -12,7 +12,6 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { auth } from "../../service/index";
 import { Notification } from "../../utils/index";
 import {signInValidationSchema} from "../../utils/validation"
-import {SignInModal} from "../../components/modal"
 
 const Index = () => {
   const initialValues = {
@@ -50,9 +49,8 @@ const Index = () => {
 
   return (
     <>
-      <SignInModal open={open}/>
       <div className="h-screen flex-col flex items-center justify-center p-5">
-        <h1 className="text-[35px] font-normal sm:text-[36px] md:text-[56px]">
+        <h1 className="text-[40px] font-bold sm:text-[36px] md:text-[56px]">
           Login
         </h1>
         <div className="max-w-[600px]">
@@ -103,27 +101,29 @@ const Index = () => {
                     ),
                   }}
                 />
-                <p
-                  className="mb-3 cursor-pointer hover:text-blue-500"
-                  onClick={() => setOpen(true)}
+                <span
+                  // onClick={() => navigate("/forgot-password")}
+                  className=" text-blue-300 cursor-pointer hover:text-blue-500"
                 >
-                  Parolni unutdingizmi?
-                </p>
+                Forgot Password?
+                </span>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   fullWidth
                   disabled={isSubmitting}
-                  sx={{ marginBottom: "8px" }}
+                  sx={{ marginBottom: "8px", marginTop: "8px" }}
                 >
                   {isSubmitting ? "Signing" : "Sign In"}
                 </Button>
+                <span>Don't have an account?</span>
                 <span
                   onClick={() => navigate("/sign-up")}
-                  className=" text-blue-300 cursor-pointer hover:text-blue-500"
+                  className="ml-2 cursor-pointer text-blue-500"
+                  
                 >
-                  Registration
+                   Register here
                 </span>
               </Form>
             )}

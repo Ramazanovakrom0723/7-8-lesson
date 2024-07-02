@@ -1,6 +1,7 @@
 import SignUp from './sign-up'
 import SignIn from './sign-in'
 import Main from './main'
-import Service from './service'
+import Orders from './orders'
 import Home from './home'
-export { SignUp, SignIn, Main, Service, Home }
+import Xizmatlar from './xizmatlar'
+export { SignUp, SignIn, Main, Orders, Home, Xizmatlar }

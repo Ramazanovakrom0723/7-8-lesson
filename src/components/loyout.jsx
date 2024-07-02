@@ -9,23 +9,43 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from "../../src/Logo 1.png";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { Button, ListItemText } from "@mui/material";
+import { Avatar, Button, ListItemText, Menu, MenuItem } from "@mui/material";
 import { LogOutModal } from "@modal";
 import routes from "../router/routes";
-import Logo from "../assets/Logo.svg"
+
+const handleOpenNavMenu = (event) => {
+  setAnchorElNav(event.currentTarget);
+};
+const handleOpenUserMenu = (event) => {
+  setAnchorElUser(event.currentTarget);
+};
+
+const handleCloseNavMenu = () => {
+  setAnchorElNav(null);
+};
+
+const handleCloseUserMenu = () => {
+  setAnchorElUser(null);
+};
+
 
 const drawerWidth = 240;
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 function ResponsiveDrawer(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
   const { pathname } = useLocation();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
 
   const handleDrawerClose = () => {
@@ -45,7 +65,7 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar> <img src={Logo} alt="logo" className="w-[144px]" /></Toolbar>
+      <img src={MenuIcon} className="h-12 w-48 ml-5 mt-2 mb-2"/>
       <Divider />
       <List>
         {routes.map((item, index) => (
@@ -89,26 +109,42 @@ function ResponsiveDrawer(props) {
         }}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <ListItem sx={{ justifyContent: "space-between" }}>
-            <Typography variant="h6" noWrap component="div">
-              Responsive drawer
-            </Typography>
-            <LogOutModal />
-          </ListItem>
-          
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, ml: 142, mr: 2  }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+            
+          </Box>
+          <LogOutModal />
         </Toolbar>
       </AppBar>
       <Box
         component="nav"
+        color="inherit"
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
@@ -156,6 +192,7 @@ function ResponsiveDrawer(props) {
         <Toolbar />
         <Outlet />
       </Box>
+      
     </Box>
   );
 }
